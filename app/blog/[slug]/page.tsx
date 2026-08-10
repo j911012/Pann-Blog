@@ -1,6 +1,7 @@
 import { getPostBySlug } from "@/lib/posts";
 import { notFound } from "next/navigation";
 import { processPostBody } from "@/lib/processContent";
+import { TableOfContents } from "@/components/TableOfContents";
 
 export default async function BlogDetail({
   params,
@@ -60,21 +61,8 @@ export default async function BlogDetail({
         {/* 目次カラム(lg以上でのみ表示) */}
         <aside className="hidden lg:block">
           <div className="sticky top-10">
-            <p className="text-sm font-semibold text-neutral-400 mb-3">
-              Table of Contents
-            </p>
-            <nav className="text-sm space-y-2">
-              {headings.map((heading) => (
-                <a
-                  key={heading.id}
-                  href={`#${heading.id}`}
-                  className="block text-neutral-400 hover:text-white transition"
-                  style={{ paddingLeft: `${(heading.level - 2) * 12}px` }}
-                >
-                  {heading.text}
-                </a>
-              ))}
-            </nav>
+            <p className="font-semibold text-white mb-3">Table of Contents</p>
+            <TableOfContents headings={headings} />
           </div>
         </aside>
       </div>
