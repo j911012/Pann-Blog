@@ -22,6 +22,14 @@ export default async function BlogDetail({
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_240px] gap-12">
         {/* 本文カラム */}
         <div className="max-w-3xl">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-1.5 text-sm text-neutral-300 hover:underline underline-offset-4 transition mb-8"
+          >
+            <ArrowLeft size={16} />
+            一覧に戻る
+          </Link>
+
           <header className="mb-8">
             <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
             <p className="text-sm text-neutral-500 mb-3">

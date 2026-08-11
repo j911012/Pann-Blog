@@ -8,7 +8,7 @@ export default async function Home() {
   return (
     <main className="min-h-screen bg-black text-white px-6 py-10 max-w-6xl mx-auto">
       <header className="mb-10">
-        <h1 className="text-2xl font-bold">Pann Blog</h1>
+        <h1 className="text-sm font-bold">Pann Blog</h1>
       </header>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
