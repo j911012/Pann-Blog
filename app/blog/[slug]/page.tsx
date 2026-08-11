@@ -1,7 +1,18 @@
-import { getPostBySlug } from "@/lib/posts";
+import { getPostBySlug, getPosts } from "@/lib/posts";
 import { notFound } from "next/navigation";
 import { processPostBody } from "@/lib/processContent";
 import { TableOfContents } from "@/components/TableOfContents";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+
+/**
+ * ビルド時に、全記事分のslugを取得して、静的ページとして事前生成する
+ * @returns 各記事のslugを持つオブジェクトの配列
+ */
+export async function generateStaticParams() {
+  const { contents } = await getPosts();
+  return contents.map((post) => ({ slug: post.slug }));
+}
 
 export default async function BlogDetail({
   params,
