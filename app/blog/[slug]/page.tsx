@@ -48,12 +48,13 @@ export default async function BlogDetail({
             </p>
             <div className="flex gap-2 flex-wrap">
               {post.tags.map((tag) => (
-                <span
+                <Link
                   key={tag.id}
-                  className="text-xs bg-neutral-800 px-2.5 py-1 rounded-full text-neutral-300"
+                  href={`/tags/${tag.slug}`}
+                  className="text-xs bg-neutral-800 hover:bg-neutral-700 px-2 py-1 rounded-full text-neutral-300 transition"
                 >
                   {tag.name}
-                </span>
+                </Link>
               ))}
             </div>
           </header>

@@ -1,18 +1,39 @@
 import Link from "next/link";
+import { getPostsByTagSlug } from "@/lib/posts";
+import { notFound } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 import { getGradient, noiseTexture } from "@/lib/gradients";
-import { getPosts } from "@/lib/posts";
 
-export default async function Home() {
-  const { contents } = await getPosts();
+export default async function TagPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const result = await getPostsByTagSlug(slug);
+
+  if (!result) {
+    notFound();
+  }
+
+  const { tag, posts } = result;
 
   return (
     <main className="min-h-screen bg-black text-white px-6 py-10 max-w-6xl mx-auto">
+      <Link
+        href="/"
+        className="inline-flex items-center gap-1.5 text-sm text-neutral-300 hover:underline underline-offset-4 transition mb-8"
+      >
+        <ArrowLeft size={16} />
+        一覧に戻る
+      </Link>
+
       <header className="mb-10">
-        <h1 className="text-2xl font-bold">Pann Blog</h1>
+        <h1 className="text-2xl font-bold">#{tag.name}</h1>
       </header>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {contents.map((post, index) => (
+        {posts.map((post, index) => (
           <Link
             key={post.id}
             href={`/blog/${post.slug}`}
@@ -26,12 +47,10 @@ export default async function Home() {
                 backgroundPosition: "center",
               }}
             >
-              {/* ノイズオーバーレイ */}
               <div
                 className="absolute inset-0 opacity-25 mix-blend-overlay pointer-events-none"
                 style={{ backgroundImage: noiseTexture }}
               />
-
               <h2 className="relative font-bold text-lg leading-snug">
                 {post.title}
               </h2>
@@ -45,12 +64,12 @@ export default async function Home() {
                 {post.publishedAt?.slice(0, 10)}
               </p>
               <div className="flex gap-2 flex-wrap">
-                {post.tags.map((tag) => (
+                {post.tags.map((t) => (
                   <span
-                    key={tag.id}
+                    key={t.id}
                     className="text-xs bg-neutral-800 px-2 py-1 rounded-full text-neutral-300"
                   >
-                    {tag.name}
+                    {t.name}
                   </span>
                 ))}
               </div>
